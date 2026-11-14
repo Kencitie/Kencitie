@@ -37,11 +37,18 @@ jobs:
           fi
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
 
+  
+      - name: Generate Android platform files
+        run: |
+          cd "$PROJECT_DIR"
+          flutter create --platforms=android .
+
       - name: Build Android APK
         run: |
           cd "$PROJECT_DIR"
           flutter pub get
           flutter build apk --release
+
 
       - name: Upload Kencitie APK
         uses: actions/upload-artifact@v4
