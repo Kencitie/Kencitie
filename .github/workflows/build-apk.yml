@@ -40,23 +40,27 @@ jobs:
   
       
       
+      
       - name: Add Firebase configuration
         run: |
-          cp "$GITHUB_WORKSPACE/google-services.json" "$PROJECT_DIR/android/app/google-services.json"
+          set -e
           cd "$PROJECT_DIR"
-          echo "=== KENCITIE ANDROID PACKAGE ==="
-          find android/app -maxdepth 1 -type f
-          echo "Firebase configuration copied successfully"
 
-          cd "$PROJECT_DIR"
+          echo "Generating Android platform files..."
           flutter create --platforms=android .
 
-      - name: Add Firebase configuration
-        run: |
-          cp "$GITHUB_WORKSPACE/google-services.json" "$PROJECT_DIR/android/app/google-services.json"
+          echo "Checking Android app folder..."
+          test -d android/app
+
+          echo "Copying Firebase configuration..."
+          cp "$GITHUB_WORKSPACE/google-services.json" android/app/google-services.json
+
+          echo "Checking Firebase file..."
+          test -f android/app/google-services.json
+          ls -l android/app/google-services.json
+
           echo "Firebase configuration copied successfully"
-          echo "=== KENCITIE ANDROID PACKAGE ==="
-          grep -nE 'applicationId|namespace' android/app/build.gradle*
+
 
 
       - name: Build Android APK
