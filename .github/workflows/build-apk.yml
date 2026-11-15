@@ -65,6 +65,18 @@ jobs:
 
       - name: Build Android APK
         run: |
+        
+      - name: Get Kencitie SHA fingerprints
+        run: |
+          set -e
+          APK_PATH=$(find "$PROJECT_DIR/build/app/outputs/flutter-apk" -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "APK not found"
+            exit 1
+          fi
+          echo "=== KENCITIE CERTIFICATE FINGERPRINTS ==="
+          keytool -printcert -jarfile "$APK_PATH" | grep -E "SHA1:|SHA256:"
+
           cd "$PROJECT_DIR"
           flutter pub get
           flutter build apk --release
