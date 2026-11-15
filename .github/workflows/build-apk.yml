@@ -38,10 +38,14 @@ jobs:
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
 
   
+      
       - name: Generate Android platform files
         run: |
           cd "$PROJECT_DIR"
           flutter create --platforms=android .
+          echo "=== KENCITIE ANDROID PACKAGE ==="
+          grep -nE 'applicationId|namespace' android/app/build.gradle*
+
 
       - name: Build Android APK
         run: |
