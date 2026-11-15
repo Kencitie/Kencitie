@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "149563044364",
+    "project_id": "kencitie-b2c46",
+    "storage_bucket": "kencitie-b2c46.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149563044364:android:30a8e2f745b88350f4b429",
+        "android_client_info": {
+          "package_name": "com.example.kencitie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5grEU9Sp-hFQeQPoNaxpOgZho7bjtRtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
