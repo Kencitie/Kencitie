@@ -93,6 +93,7 @@ jobs:
 
           echo "APK build completed successfully"
 
+      
       - name: Get Kencitie SHA fingerprints
         run: |
           set -e
@@ -102,8 +103,24 @@ jobs:
           echo "Checking APK..."
           test -f "$APK_PATH"
 
-          echo "=== KENCITIE CERTIFICATE FINGERPRINTS ==="
-          keytool -printcert -jarfile "$APK_PATH" | grep -E "SHA1:|SHA256:"
+          SDK_ROOT="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
+
+          if [ -z "$SDK_ROOT" ]; then
+            echo "Android SDK location not found"
+            exit 1
+          fi
+
+          APKSIGNER=$(find "$SDK_ROOT/build-tools" \
+            -type f -name apksigner | sort -V | tail -n 1)
+
+          if [ -z "$APKSIGNER" ]; then
+            echo "ApkSigner not found"
+            exit 1
+          fi
+
+          echo "=== KENCITIE SHA FINGERPRINTS ==="
+          "$APKSIGNER" verify --print-certs "$APK_PATH"
+
 
 
           cd "$PROJECT_DIR"
