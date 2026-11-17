@@ -1,6 +1,7 @@
 
 name: Build Kencitie Android APK
 
+
 on:
   workflow_dispatch:
   push:
@@ -35,11 +36,7 @@ jobs:
             echo "Flutter project not found"
             exit 1
           fi
-          echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
-
-  
-      
-      
+          echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_EN
       
       - name: Add Firebase configuration
         run: |
@@ -65,7 +62,7 @@ jobs:
 
       - name: Build Android APK
         run: |
-        
+       
       - name: Get Kencitie SHA fingerprints
         run: |
           set -e
