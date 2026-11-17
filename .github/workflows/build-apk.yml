@@ -27,16 +27,32 @@ jobs:
         with:
           channel: stable
 
+      
       - name: Extract Kencitie project
         run: |
-          mkdir extracted
-          unzip kencitie_flutter_settings_repaired.zip -d extracted
-          PROJECT_DIR=$(find extracted -name pubspec.yaml -printf '%h\n' | head -n 1)
-          if [ -z "$PROJECT_DIR" ]; then
+          set -e
+          mkdir -p extracted
+
+          unzip -o kencitie_flutter_settings_repaired.zip -d extracted
+
+          PROJECT_FILE=$(find extracted -name pubspec.yaml -print -quit)
+
+          if [ -z "$PROJECT_FILE" ]; then
             echo "Flutter project not found"
             exit 1
           fi
-          echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_EN
+
+          PROJECT_DIR=$(dirname "$PROJECT_FILE")
+
+          echo "Found project at: $PROJECT_DIR"
+
+          if [ -z "$GITHUB_ENV" ]; then
+            echo "GITHUB_ENV is not set"
+            exit 1
+          fi
+
+          printf 'PROJECT_DIR=%s\n' "$PROJECT_DIR" >> "$GITHUB_ENV"
+
       
       - name: Add Firebase configuration
         run: |
